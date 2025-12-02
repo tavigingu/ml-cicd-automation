@@ -24,12 +24,11 @@ update-branch:
 hf-login:
 	git pull origin update
 	git switch update
-	python -m pip install --break-system-packages -U "huggingface_hub[cli]"
-	python -m huggingface_hub.commands.huggingface_cli login --token $(HF) --add-to-git-credential
+	pip install -U huggingface_hub
 
 push-hub:
-	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./App --repo-type=space --commit-message="Sync App files"
-	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./Model /Model --repo-type=space --commit-message="Sync Model"
-	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./Results /Metrics --repo-type=space --commit-message="Sync Model"
+	python -c "from huggingface_hub import HfApi; HfApi(token='$(HF)').upload_folder(folder_path='./App', repo_id='tavi33/Drug-Classifiaction', repo_type='space', commit_message='Sync App files')"
+	python -c "from huggingface_hub import HfApi; HfApi(token='$(HF)').upload_folder(folder_path='./Model', repo_id='tavi33/Drug-Classifiaction', repo_type='space', path_in_repo='Model', commit_message='Sync Model')"
+	python -c "from huggingface_hub import HfApi; HfApi(token='$(HF)').upload_folder(folder_path='./Results', repo_id='tavi33/Drug-Classifiaction', repo_type='space', path_in_repo='Metrics', commit_message='Sync Results')"
 
 deploy: hf-login push-hub
