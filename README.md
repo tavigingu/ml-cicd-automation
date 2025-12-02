@@ -2,6 +2,10 @@
 
 A complete CI/CD pipeline for Machine Learning projects using GitHub Actions, automated model training, evaluation, and deployment to Hugging Face Spaces.
 
+## CI/CD Pipeline
+
+![CI/CD Pipeline](assets/CICD-pipeline.png)
+
 ## Live Demo
 
 Try the deployed application: [Drug Classification App](https://huggingface.co/spaces/tavi33/Drug-Classifiaction)
