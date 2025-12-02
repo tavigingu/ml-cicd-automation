@@ -24,12 +24,12 @@ update-branch:
 hf-login:
 	git pull origin update
 	git switch update
-	pip install -U "huggingface_hub[cli]"
-	PATH="$$HOME/.local/bin:$$PATH" huggingface-cli login --token $(HF) --add-to-git-credential
+	python -m pip install --break-system-packages -U "huggingface_hub[cli]"
+	python -m huggingface_hub.commands.huggingface_cli login --token $(HF) --add-to-git-credential
 
 push-hub:
-	huggingface-cli upload tavi33/Drug-Classifiaction ./App --repo-type=space --commit-message="Sync App files"
-	huggingface-cli upload tavi33/Drug-Classifiaction ./Model /Model --repo-type=space --commit-message="Sync Model"
-	huggingface-cli upload tavi33/Drug-Classifiaction ./Results /Metrics --repo-type=space --commit-message="Sync Model"
+	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./App --repo-type=space --commit-message="Sync App files"
+	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./Model /Model --repo-type=space --commit-message="Sync Model"
+	python -m huggingface_hub.commands.huggingface_cli upload tavi33/Drug-Classifiaction ./Results /Metrics --repo-type=space --commit-message="Sync Model"
 
 deploy: hf-login push-hub
